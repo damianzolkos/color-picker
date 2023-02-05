@@ -11,16 +11,16 @@
     <div id="wrapper">
         <div id="display"></div>
         <div class="flex">
-            <input type="number" min="0" max="255" class="text sidebyside" id="red" v-model:value="red" v-on:input="change">
-            <input type="number" min="0" max="255" class="text sidebyside" id="green" v-model:value="green" v-on:input="change">
-            <input type="number" min="0" max="255" class="text sidebyside" id="blue" v-model:value="blue" v-on:input="change">
+            <input type="number" min="0" max="255" class="text sidebyside" id="red" v-model:value="red" v-on:input="change" style="border: 1px solid #E03026;">
+            <input type="number" min="0" max="255" class="text sidebyside" id="green" v-model:value="green" v-on:input="change" style="border: 1px solid #009546;">
+            <input type="number" min="0" max="255" class="text sidebyside" id="blue" v-model:value="blue" v-on:input="change" style="border: 1px solid #2960DC;">
         </div>
         <div class="flex">
             <input type="text" v-model:value="hex" class="text" id="hex" v-on:input="hexToInt">
         </div>
-        <input type="range" v-model:value="red" min="0" max="255" id="red" class="range" v-on:input="change">
-        <input type="range" v-model:value="green" min="0" max="255" id="green" class="range" v-on:input="change">
-        <input type="range" v-model:value="blue" min="0" max="255" id="blue" class="range" v-on:input="change">
+        <div class="flex"><span style="margin-right: 10px;">R</span><input type="range" v-model:value="red" min="0" max="255" id="red" class="range" v-on:input="change"></div>
+        <div class="flex"><span style="margin-right: 10px;">G</span><input type="range" v-model:value="green" min="0" max="255" id="green" class="range" v-on:input="change"></div>
+        <div class="flex"><span style="margin-right: 10px;">B</span><input type="range" v-model:value="blue" min="0" max="255" id="blue" class="range" v-on:input="change"></div>
     </div>
     <script>
         var data = {
@@ -110,8 +110,7 @@
             width: calc(100% - 14px);
             box-shadow: inset 0 0 4px #ebebeb;
         }
-        .text:nth-child(2)
-        {
+        .text:nth-child(2) {
             margin: 3px 5px;
         }
         .range {
@@ -120,6 +119,7 @@
         .flex {
             display: flex;
             margin-top: 10px;
+            align-items: flex-end;
         }
         #display {
             min-height: 140px;
