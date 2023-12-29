@@ -4,55 +4,54 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title>ColorPicker</title>
 </head>
 <body>
-    <div id="wrapper">
-        <div id="display"></div>
+    <div id="wrapper" x-data="app">
+        <div x-bind:style="true && { background: rgb }" id="display"></div>
         <div class="flex">
-            <input type="number" min="0" max="255" class="text sidebyside" id="red" v-model:value="red" v-on:input="change" style="border: 1px solid #E03026;">
-            <input type="number" min="0" max="255" class="text sidebyside" id="green" v-model:value="green" v-on:input="change" style="border: 1px solid #009546;">
-            <input type="number" min="0" max="255" class="text sidebyside" id="blue" v-model:value="blue" v-on:input="change" style="border: 1px solid #2960DC;">
+            <input type="number" min="0" max="255" class="text sidebyside b-red" x-model="red" x-on:input="change">
+            <input type="number" min="0" max="255" class="text sidebyside b-green" x-model="green" x-on:input="change">
+            <input type="number" min="0" max="255" class="text sidebyside b-blue" x-model="blue" x-on:input="change">
         </div>
         <div class="flex">
-            <input type="text" v-model:value="hex" class="text" id="hex" v-on:input="hexToInt">
+            <input type="text" x-model="hex" class="text" id="hex" x-on:input="hexToInt">
         </div>
-        <div class="flex"><span style="margin-right: 10px;">R</span><input type="range" v-model:value="red" min="0" max="255" id="red" class="range" v-on:input="change"></div>
-        <div class="flex"><span style="margin-right: 10px;">G</span><input type="range" v-model:value="green" min="0" max="255" id="green" class="range" v-on:input="change"></div>
-        <div class="flex"><span style="margin-right: 10px;">B</span><input type="range" v-model:value="blue" min="0" max="255" id="blue" class="range" v-on:input="change"></div>
+        <div class="flex gap-10">
+            R
+            <input type="range" x-model="red" min="0" max="255" class="range" x-on:input="change"></div>
+        <div class="flex gap-10">
+            G
+            <input type="range" x-model="green" min="0" max="255" class="range" x-on:input="change"></div>
+        <div class="flex gap-10">
+            B
+            <input type="range" x-model="blue" min="0" max="255" lass="range" x-on:input="change"></div>
     </div>
     <script>
-        var data = {
-            red: 128,
-            green: 200,
-            blue: 70,
-            hex: "#80C846",
-            rgb: "rgb(128, 200, 70)",
-            hexData: {
-                r: "80",
-                g: "C8",
-                b: "46"
-            }
-        }
-        document.getElementById("display").style.backgroundColor = this.data.rgb;
-
-        var app = new Vue({
-            el: '#wrapper',
-            data: data,
-            methods: {
-                change: function() {
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('app', () => ({
+                red: 128,
+                green: 200,
+                blue: 70,
+                hex: "#80C846",
+                rgb: "rgb(128, 200, 70)",
+                hexData: {
+                    r: "80",
+                    g: "C8",
+                    b: "46"
+                },
+                change() {
                     this.hexData = {
-                        r: this.red < 16 ? "0" + parseInt(this.red).toString(16) : parseInt(this.red).toString(16),
-                        g: this.green < 16 ? "0" + parseInt(this.green).toString(16) : parseInt(this.green).toString(16),
-                        b: this.blue < 16 ? "0" + parseInt(this.blue).toString(16) : parseInt(this.blue).toString(16),
+                        r: parseInt(this.red).toString(16).padStart(2, "0"),
+                        g: parseInt(this.green).toString(16).padStart(2, "0"),
+                        b: parseInt(this.blue).toString(16).padStart(2, "0"),
                     };
 
                     this.hex = "#" + (this.hexData.r + this.hexData.g + this.hexData.b).toUpperCase();
                     this.rgb = "rgb(" + this.red +"," + this.green + "," + this.blue + ")";
-                    document.getElementById("display").style.backgroundColor = this.rgb;
                 },
-                hexToInt: function() {
+                hexToInt() {
                     if (!this.hex.includes("#")) {
                         this.hex = "#" + this.hex;
                     }
@@ -72,9 +71,8 @@
                     };
 
                     this.rgb = "rgb(" + this.red + "," + this.green + "," + this.blue + ")";
-                    document.getElementById("display").style.backgroundColor = this.rgb;
                 }
-            }
+            }))
         });
     </script>
 </body>
@@ -127,6 +125,21 @@
             margin: 0px;
             border: 1px solid #0000002c;
             box-shadow: 0 0 10px #d3d3d3;
+        }
+        .gap-10 {
+            gap: 10px;
+        }
+        .mr10 {
+            margin-right: 10px;
+        }
+        .b-red {
+            border: 1px solid #E03026;
+        }
+        .b-green {
+            border: 1px solid #009546;
+        }
+        .b-blue {
+            border: 1px solid #2960DC;
         }
     </style>
 </html>
